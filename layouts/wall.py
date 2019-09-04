@@ -10,14 +10,40 @@ lines = []
 #print '[\n' + ',\n'.join(lines) + '\n]'
 
 pixels = 60
-num = 17
-distance = 1
-factor = 0.05
+strips = 17
+horizontal = 1
+vertical = 0.05
 x = 0
+y = 0
 z = 0
 
-for strip in range(-(num/2), num/2):
-	for pixel in range(-(pixels/2), pixels/2):
+for strip in range(strips):
+	if strip < 5:
+		x = (3*horizontal)
+		y = (5-strip)*horizontal
+	elif strip > 11:
+		x = -(3*horizontal)
+		y = (strip-11)*horizontal
+	else:
+		x = 8-strip*horizontal		
+#		if strip < 9:
+#			x = 9-strip*horizontal
+#		else:
+#			x = strip-9*horizontal
+		y = 0
+		
+
+	for pixel in range(pixels):
+		if pixel < (pixels/2):
+			z = -((pixels/2)-pixel)*vertical
+		elif pixel > (pixels/2):
+			z = (pixel-(pixels/2))*vertical
+		else:
+			z = 0
+
 		lines.append('{"point": [%.2f, %.2f, %.2f]}' %
-			(strip*distance, 0, pixel*factor))
+			(x, y, z))
+
+# red green blue
+
 print '[\n' + ',\n'.join(lines) + '\n]'
